@@ -59,6 +59,7 @@ Define email processing rules in rules/rules.json
 ├── rules/                      # Email rules and engine
 │   └── rules.json              # Email processing rules
 │   └── rules_engine.py         # Logic for evaluating and applying rules
+|   └── email_actions.py        # Perform actions based on the rules
 ├── tests/                      # Unit tests
 │   └── test_email_api.py       # Tests for Gmail API interactions
 │   └── test_rules_engine.py    # Tests for rule evaluation and actions
