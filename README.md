@@ -4,7 +4,7 @@ Email Processing Rules Engine is a Python-based application that interacts with 
 
 ## Features
 
-- Fetches unread emails from Gmail using the Gmail API.
+- Fetche emails from Gmail using the Gmail API.
 - Evaluates emails based on user-defined conditions (e.g., from email address, subject).
 - Applies actions based on the conditions (e.g., mark as read, move to folder).
 - Easy configuration via JSON-based rules and Gmail API credentials.
