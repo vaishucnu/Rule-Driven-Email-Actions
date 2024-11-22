@@ -1,6 +1,6 @@
 # Email Processing Rules Engine
 
-Email Processing Rules Engine is a Python-based application that interacts with the Gmail API to automatically process the emails. Users can define rules to evaluate specific conditions (such as sender, subject, etc.), and the application will perform actions like marking emails as read, moving them to folders, and more.
+Email Processing Rules Engine is a Python-based application that interacts with the Gmail API to process emails automatically. Users can define rules to evaluate specific conditions (such as sender, subject, etc.), and the application will perform actions like marking emails as read, moving them to folders, and more.
 
 ## Features
 
@@ -19,17 +19,17 @@ Email Processing Rules Engine is a Python-based application that interacts with 
 
 2. Install the required dependencies:
 
-	```bash
-	 python3 -m venv venv
-     source venv/bin/activate
-     pip install -r requirements.txt
-	```
+```bash
+	python3 -m venv venv
+        source venv/bin/activate
+	pip install -r requirements.txt
+```
 
 3. Set up your Gmail API credentials:
 
-	Go to the Google Developer Console.
-	Create a new project and enable the Gmail API.
-	Download the credentials JSON file and place it in the config/ directory as config.json.
+	- Go to the Google Developer Console.
+	- Create a new project and enable the Gmail API.
+	- Download the credentials JSON file and place it in the config/ directory as config.json.
 
 ## Configuration
 
@@ -42,14 +42,13 @@ Email Processing Rules Engine is a Python-based application that interacts with 
 ## Usage
 	1. Run the main script to start processing emails:
 		```bash
-			python main.py
+		python main.py
 		```
 
 	2. The script will:
-
-		Fetch unread emails from your Gmail inbox.
-		Apply the defined rules to the emails (e.g., mark as read or move to a folder).
-		Print logs of actions performed.
+		- Fetch unread emails from your Gmail inbox.
+		- Apply the defined rules to the emails (e.g., mark as read or move to a folder).
+		- Print logs of actions performed.
 
 ## Directory Structure
 
@@ -72,15 +71,16 @@ email-processing/
 └── README.md                   # Project documentation
 
 
-Tests
+## Tests
 Run tests:
-
 Ensure you have pytest installed:
 
-pip install pytest
+```bash
+ pip install pytest
+```
 Run all tests:
-
-pytest
-Test coverage:
-
+	```bash
+		pytest
+  	```
+## Test coverage:
 The tests cover key components of the project, including Gmail API interactions, rule evaluations, and database operations.
