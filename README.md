@@ -44,7 +44,7 @@ Define email processing rules in rules/rules.json
 	```
 
 2. The script will:
-	- Fetch unread emails from your Gmail inbox.
+	- Fetch emails from your Gmail inbox.
 	- Apply the defined rules to the emails (e.g., mark as read or move to a folder).
 	- Print logs of actions performed.
 
