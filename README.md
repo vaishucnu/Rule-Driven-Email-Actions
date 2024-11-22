@@ -73,13 +73,13 @@ email-processing/
 ## Tests
 Run tests:
 Ensure you have pytest installed:
-
 	```bash
-	pip install pytest
+		pip install pytest
 	```
+
 Run all tests:
 	```bash
-		pytest
+ 		pytest
   	```
 ## Test coverage:
 The tests cover key components of the project, including Gmail API interactions, rule evaluations, and database operations.
