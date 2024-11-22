@@ -1,0 +1,48 @@
+[
+  {
+    "conditions": [
+      {
+        "field": "from_email",
+        "predicate": "contains",
+        "value": "example@gmail.com"
+      },
+      {
+        "field": "subject",
+        "predicate": "contains",
+        "value": "Assignment"
+      }
+    ],
+    "actions": [
+      "mark_as_read",
+      "move_to_folder:Assignments"
+    ],
+    "predicate": "All"
+  },
+  {
+    "conditions": [
+      {
+        "field": "subject",
+        "predicate": "contains",
+        "value": "Urgent"
+      }
+    ],
+    "actions": [
+      "mark_as_unread"
+    ],
+    "predicate": "All"
+  },
+  {
+    "conditions": [
+      {
+        "field": "subject",
+        "predicate": "contains",
+        "value": "Last chance"
+      }
+    ],
+    "actions": [
+      "mark_as_unread",
+      "move_to_folder:SPAM"
+    ],
+    "predicate": "Any"
+  }
+]
