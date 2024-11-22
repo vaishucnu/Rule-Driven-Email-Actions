@@ -13,7 +13,7 @@ Email Processing Rules Engine is a Python-based application that interacts with 
 
 1. Clone the repository:
 	```bash
-	git clone https://github.com/yourusername/email-processing.git
+	git clone https://github.com/vaishucnu/Rule-Driven-Email-Actions.git
 	```
 
 2. Install the required dependencies:
