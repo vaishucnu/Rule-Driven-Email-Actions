@@ -12,20 +12,19 @@ Email Processing Rules Engine is a Python-based application that interacts with 
 ## Installation
 
 1. Clone the repository:
+ 	```bash
+		git clone https://github.com/yourusername/email-processing.git
+	```
+
+3. Install the required dependencies:
+
 	```bash
-   git clone https://github.com/yourusername/email-processing.git
-   cd email-processing
-   ```
+		python3 -m venv venv
+	        source venv/bin/activate
+		pip install -r requirements.txt
+	```
 
-2. Install the required dependencies:
-
-```bash
-	python3 -m venv venv
-        source venv/bin/activate
-	pip install -r requirements.txt
-```
-
-3. Set up your Gmail API credentials:
+4. Set up your Gmail API credentials:
 
 	- Go to the Google Developer Console.
 	- Create a new project and enable the Gmail API.
@@ -42,7 +41,7 @@ Email Processing Rules Engine is a Python-based application that interacts with 
 ## Usage
 	1. Run the main script to start processing emails:
 		```bash
-		python main.py
+			python main.py
 		```
 
 	2. The script will:
@@ -75,9 +74,9 @@ email-processing/
 Run tests:
 Ensure you have pytest installed:
 
-```bash
- pip install pytest
-```
+	```bash
+	pip install pytest
+	```
 Run all tests:
 	```bash
 		pytest
