@@ -1,6 +1,6 @@
 # Email Processing Rules Engine
 
-Email Processing Rules Engine is a Python-based application that interacts with the Gmail API to process emails automatically. Users can define rules to evaluate specific conditions (such as sender, subject, etc.), and the application will perform actions like marking emails as read, moving them to folders, and more.
+Email Processing Rules Engine is a Python-based application that interacts with the Gmail API to process emails. Users can define rules to evaluate specific conditions (such as sender, subject, etc.), and the application will perform actions like marking emails as read, moving them to folders, and more.
 
 ## Features
 
