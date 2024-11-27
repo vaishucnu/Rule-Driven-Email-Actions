@@ -3,6 +3,7 @@ import pickle
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from datetime import datetime
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
 
@@ -48,14 +49,24 @@ def fetch_emails(service):
             payload = msg.get("payload", {})
             headers = payload.get("headers", [])
             email_data = {
-                "id": message["id"],
-                "from": next((header["value"] for header in headers if header["name"] == "from"), ""),
-                "subject": next((header["value"] for header in headers if header["name"] == "subject"), ""),
-                "received_date": msg.get("Date", ""),
-                "body": payload.get("body", {}).get("data", ""),
+                "id": message.get("id", ""),
+                "from": extract_header(headers, "from"),
+                "subject": extract_header(headers, "subject"),
+                "received_date": parse_received_date(extract_header(headers, "date")),
+                "body": payload['parts'][0]['body']['data']
             }
             emails.append(email_data)
         return emails
     except HttpError as error:
         print(f"An error occurred: {error}")
         return []
+
+def parse_received_date(raw_date):
+    try:
+        return datetime.strptime(raw_date, "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d")
+    except (ValueError, TypeError) as e:
+        print(f"Error parsing date: {raw_date}. Error: {e}")
+        return ""
+
+def extract_header(headers, name):
+    return next((header["value"] for header in headers if header["name"].lower() == name.lower()), "")

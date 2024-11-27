@@ -4,11 +4,11 @@
       {
         "field": "from_email",
         "predicate": "contains",
-        "value": "example@gmail.com"
+        "value": "assignment@gmail.com"
       },
       {
         "field": "subject",
-        "predicate": "contains",
+        "predicate": "equals",
         "value": "Assignment"
       }
     ],
@@ -22,8 +22,32 @@
     "conditions": [
       {
         "field": "subject",
+        "predicate": "does not contain",
+        "value": "Discount"
+      },
+      {
+        "field": "subject",
         "predicate": "contains",
-        "value": "Urgent"
+        "value": "Sale"
+      }
+    ],
+    "actions": [
+      "mark_as_read",
+      "move_to_folder:Promotions"
+    ],
+    "predicate": "All"
+  },
+  {
+    "conditions": [
+      {
+        "field": "subject",
+        "predicate": "contains",
+        "value": "Urgent: Action Required"
+      },
+      {
+        "field": "body",
+        "predicate": "does not equal",
+        "value": "Please reply"
       }
     ],
     "actions": [
@@ -36,12 +60,16 @@
       {
         "field": "subject",
         "predicate": "contains",
-        "value": "Last chance"
+        "value": "Newsletters"
+      },
+      {
+        "field": "received_at",
+        "predicate": "less than days",
+        "value": "5"
       }
     ],
     "actions": [
-      "mark_as_unread",
-      "move_to_folder:SPAM"
+      "move_to_folder:Newsletter"
     ],
     "predicate": "Any"
   }

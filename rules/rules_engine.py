@@ -14,22 +14,41 @@ def load_rules():
 
 def evaluate_conditions(email, conditions, rule_predicate="All"):
     operators = {
+        # String-based predicates
         "contains": lambda field, value: value in field,
         "does not contain": lambda field, value: value not in field,
-        "greater than": lambda field, value: field > value,
-        "less than": lambda field, value: field < value
+        "equals": lambda field, value: field == value,
+        "does not equal": lambda field, value: field != value,
+        # Date-based predicates
+        "less than days": lambda field, value: (datetime.now() - datetime.strptime(field, "%Y-%m-%d")).days < int(value),
+        "greater than days": lambda field, value: (datetime.now() - datetime.strptime(field, "%Y-%m-%d")).days > int(value),
+        "less than months": lambda field, value: (datetime.now() - datetime.strptime(field, "%Y-%m-%d")).days / 30 < int(value),
+        "greater than months": lambda field, value: (datetime.now() - datetime.strptime(field, "%Y-%m-%d")).days / 30 > int(value)
     }
 
     results = []
     for condition in conditions:
-        field_value = email.get(condition['field'], "")
+        field_name = condition['field']
         predicate = condition['predicate']
         value = condition['value']
 
+        field_value = email.get(field_name, "")
+
+        # Handle missing fields
+        if not field_value:
+            print(f"Warning: Field '{field_name}' not found in email.")
+            results.append(False)
+            continue
+
         if predicate in operators:
-            results.append(operators[predicate](field_value, value))
+            try:
+                results.append(operators[predicate](field_value, value))
+            except Exception as e:
+                print(f"Error evaluating condition: {condition}. Error: {e}")
+                results.append(False)
         else:
             print(f"Unsupported predicate: {predicate}")
+            results.append(False)
 
     return all(results) if rule_predicate == "All" else any(results)
 
