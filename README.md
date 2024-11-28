@@ -44,8 +44,12 @@ Define email processing rules in rules/rules.json
 	```
 
 2. The script will:
-	- Fetch emails from your Gmail inbox.
-	- Apply the defined rules to the emails (e.g., mark as read or move to a folder).
+	- Fetch emails from your Gmail inbox by Authenticating to Google’s Gmail API
+	- Apply the defined rules to the emails and perform the actions (e.g., mark as read or move to a folder).
+ 		- Fields: From, Subject, Message, Received Date/Time
+		- Predicate:
+			- For string type fields - Contains, Does not Contain, Equals, Does not equal
+			- For date type field (Received) - Less than / Greater than for days / months.	 
 	- Print logs of actions performed.
 
 ## Directory Structure
