@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from rules.email_actions import mark_as_read, mark_as_unread, move_to_folder
 
 # Load rules from JSON file
@@ -20,10 +20,10 @@ def evaluate_conditions(email, conditions, rule_predicate="All"):
         "equals": lambda field, value: field == value,
         "does not equal": lambda field, value: field != value,
         # Date-based predicates
-        "less than days": lambda field, value: (datetime.now() - datetime.strptime(field, "%Y-%m-%d")).days < int(value),
-        "greater than days": lambda field, value: (datetime.now() - datetime.strptime(field, "%Y-%m-%d")).days > int(value),
-        "less than months": lambda field, value: (datetime.now() - datetime.strptime(field, "%Y-%m-%d")).days / 30 < int(value),
-        "greater than months": lambda field, value: (datetime.now() - datetime.strptime(field, "%Y-%m-%d")).days / 30 > int(value)
+        "less than days": lambda field_date, value: datetime.strptime(field_value, '%Y-%m-%d %H:%M:%S')  > (datetime.now() - timedelta(days=int(value))),
+        "greater than days": lambda field_date, value: datetime.strptime(field_value, '%Y-%m-%d %H:%M:%S')  < (datetime.now() - timedelta(days=int(value))),
+        "less than months": lambda field_date, value: datetime.strptime(field_value, '%Y-%m-%d %H:%M:%S')  > (datetime.now() - timedelta(days=int(value) * 30)),
+        "greater than months": lambda field_date, value: datetime.strptime(field_value, '%Y-%m-%d %H:%M:%S')  < (datetime.now() - timedelta(days=int(value) * 30))
     }
 
     results = []

@@ -4,33 +4,6 @@ def create_connection():
     conn = sqlite3.connect('emails.db')
     return conn
 
-def create_table():
-    conn = create_connection()
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS emails (
-            id TEXT PRIMARY KEY,
-            from_address TEXT,
-            to_address TEXT,
-            subject TEXT,
-            body TEXT,
-            received_date TEXT,
-            label_ids TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
-def insert_email(email):
-    conn = create_connection()
-    c = conn.cursor()
-    c.execute('''
-        INSERT OR REPLACE INTO emails (id, from_address, to_address, subject, body, received_date, label_ids)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (email['id'], email['from'], email['to'], email['subject'], email['body'], email['received_date'], email['label_ids']))
-    conn.commit()
-    conn.close()
-
 def store_emails_in_db(emails):
     conn = create_connection()
     cursor = conn.cursor()
@@ -38,18 +11,19 @@ def store_emails_in_db(emails):
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS emails (
             id TEXT PRIMARY KEY,
-            from_email TEXT,
+            from_email TEXT NOT NULL,
             subject TEXT,
-            received_date TEXT,
-            body TEXT
+            body TEXT,
+            received_date DATETIME,
+            status BOOLEAN NOT NULL DEFAULT 0 -- 0 for unread, 1 for read
         )
     """)
 
     for email in emails:
         cursor.execute("""
-            INSERT OR IGNORE INTO emails (id, from_email, subject, received_date, body)
-            VALUES (?, ?, ?, ?, ?)
-        """, (email["id"], email["from"], email["subject"], email["received_date"], email["body"]))
+            INSERT OR IGNORE INTO emails (id, from_email, subject, body, received_date, status)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (email["id"], email["from"], email["subject"], email["body"], email["received_date"], email["status"]))
 
     conn.commit()
     conn.close()
@@ -60,5 +34,10 @@ def fetch_all_email():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM emails")
     rows = cursor.fetchall()
+
+    cursor.execute("PRAGMA table_info(emails);")
+    columns = cursor.fetchall()
+    for column in columns:
+        print(dict(column))
     conn.close()
     return [dict(row) for row in rows]

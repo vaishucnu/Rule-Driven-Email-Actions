@@ -1,5 +1,5 @@
 from email_api.email_api import authenticate_gmail, fetch_emails
-from database.db import create_table, insert_email, fetch_all_email, store_emails_in_db
+from database.db import fetch_all_email, store_emails_in_db
 from rules.rules_engine import process_emails
 
 def main():

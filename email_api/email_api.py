@@ -1,5 +1,6 @@
 import os
 import pickle
+import base64
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -52,8 +53,9 @@ def fetch_emails(service):
                 "id": message.get("id", ""),
                 "from": extract_header(headers, "from"),
                 "subject": extract_header(headers, "subject"),
-                "received_date": parse_received_date(extract_header(headers, "date")),
-                "body": payload['parts'][0]['body']['data']
+                "received_date": parse_received_date(msg['internalDate']),
+                "body": parse_body(payload['parts'][0]),
+                "status": 0 if 'UNREAD' in msg["labelIds"] else 1
             }
             emails.append(email_data)
         return emails
@@ -61,9 +63,17 @@ def fetch_emails(service):
         print(f"An error occurred: {error}")
         return []
 
+def parse_body(body_payload):
+    email_format = body_payload["mimeType"]
+    body = body_payload['body']['data']
+    if email_format == "text/plain" or email_format == "text/html":
+        # Decode the base64 encoded string
+        body = base64.urlsafe_b64decode(body).decode("utf-8")
+    return body
+
 def parse_received_date(raw_date):
     try:
-        return datetime.strptime(raw_date, "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d")
+        return datetime.fromtimestamp(int(raw_date) / 1000)
     except (ValueError, TypeError) as e:
         print(f"Error parsing date: {raw_date}. Error: {e}")
         return ""

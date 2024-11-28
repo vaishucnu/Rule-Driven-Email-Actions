@@ -10,10 +10,11 @@ class TestDatabase(unittest.TestCase):
         self.cursor = self.conn.cursor()
         self.cursor.execute('''CREATE TABLE emails (
                                 id TEXT PRIMARY KEY,
-                                from_email TEXT,
+                                from_email TEXT NOT NULL,
                                 subject TEXT,
-                                received_date TEXT,
-                                body TEXT
+                                body TEXT,
+                                received_date DATETIME,
+                                status BOOLEAN NOT NULL DEFAULT 0
                             )''')
         self.conn.commit()
 
@@ -23,7 +24,8 @@ class TestDatabase(unittest.TestCase):
             'from_email': 'example@gmail.com',
             'subject': 'Test Email',
             'received_date': '2024-11-22',
-            'body': 'Test body'
+            'body': 'Test body',
+            'status': 0
         }
         insert_email(self.conn, email)
         
@@ -39,7 +41,8 @@ class TestDatabase(unittest.TestCase):
             'from_email': 'example@gmail.com',
             'subject': 'Test Email',
             'received_date': '2024-11-22',
-            'body': 'Test body'
+            'body': 'Test body',
+            'status': 0
         }
         insert_email(self.conn, email)
         
